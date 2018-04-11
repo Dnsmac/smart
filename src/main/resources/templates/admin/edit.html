@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<header th:replace="admin/header::headerFragment('接口编辑','publish')">
+</header>
+<body>
+				    <div th:replace="admin/header::header-body"></div>
+
+				    
+		    		 		<input th:attr ="type=hidden" id="seriesId"  th:value="${seriesId}"/>
+							<input type="hidden"   id="projectIdType"  th:value="${projectIdType}"/>
+		    	
+							<div class="form-group col-md-1" style="padding: 30px 10px 0  3px;    margin-left: 43px; margin-right: -63px;">
+                         		 <button class="btn btn-primary waves-effect waves-light" onclick="backHtml()">返回</button>
+                            </div>
+                            <div class="form-group col-md-1" style="padding: 30px 10px 0  3px;">
+                                <button class="btn btn-primary waves-effect waves-light" onclick="saveHtml()">保存</button>
+                            </div>
+			
+   			
+        					<div class="form-group col-md-3" style="padding: 30px 10px 0 93px;">
+                                <input type="text" class="form-control" placeholder="请输入标题（必须）" name="title"
+                                       required="required"
+                                       aria-required="true" />
+                            </div>
+                            <div class="form-group col-md-3" style="padding: 30px 92px 12px 10px;">
+                                <input type="text" class="form-control"  placeholder="接口访问URL（必须）" name="url" />
+                            </div>
+<div id="layout"  style="height: 900px;">
+    <div id="test-editormd">
+		        <textarea id="text" class="editormd-html-textarea" name="text">
+[TOC]
+
+
+
+## 接口说明
+	（tab键）
+	说明 ！！！！
+	说明！！！！
+		说明 ！！！！
+	说明！！！！
+
+###  请求示例如下：
+```
+http://localhost:8080/activitiesFromData/activitiesList.htm?Phone=120
+```
+
+
+
+## 参数说明
+
+### 请求参数
+参数          | 类型     | 是否必须       | 参数说明                 | 描述
+--------     | ---      | ------        | ------                   | ------
+createTime   | String   |  是           |  请求时间戳               | 时间戳,采用yyyy-MM-dd  的形式，前后5分钟内的请求为有效请求
+Phone        | string   |  是           | 手机号码                  | 求情的手机号码 根据手机去匹配去查看手机归属地 
+Pipe         | dubbo    |  否           |                           | 
+
+
+
+
+
+
+### 返回参数
+
+
+  参数名    | 类型             |参数说明       |描述
+--------    | ------         | ------         |------
+ CODE 		| int  			 |状态码		   |状态码。200为成功，其余为失败 
+ RESULT 	| json 			 | 结果           |返回的信息
+ city 		| string 		 | 城市           |城市
+popConfigList  | List《json》  |弹窗信息        |信息
+ id  		| int 			 |弹窗id          |主键标识
+ state     | int		     | 状态           |状态说明
+
+#### state 说明
+
+| 类型  |  描述 |
+| ------------ | ------------ |
+| 0  |  未启用 |
+| 1  |  启用 |
+| -1  | 废弃 |
+-------------------------------------
+
+
+###返回参数例子
+
+[json格式化](https://www.bejson.com/ "json格式化")
+
+    {
+    	"RESULT": {
+    		"city": "深圳",
+    		"popConfigList": [{
+    			"id": 39,
+    			"popName": "提效率不延期–如何提高团队工作效率",
+    			"popPage": 0,
+    			"os": 0,
+    			"img": "https://static.woshipm.com/APP_POP_20180408105223_82658.jpg",
+    			"targetPage": {
+    				"type": 0,
+    				"id": 979099,
+    				"url": ""
+    			},
+    			"priority": 3,
+    			"frequency": 0,
+    			"targetUser": {
+    				"isNew": 1,
+    				"isLogin": 0,
+    				"isAuthor": 0
+    			},
+    			"targetVersion": "all",
+    			"targetCity": "深圳市,广州市,惠州市,东莞市",
+    			"showCount": {
+    				"android": 0,
+    				"ios": 253
+    			},
+    			"clickCount": {
+    				"android": 0,
+    				"ios": 21
+    			},
+    			"runStartTime": 1523154558000,
+    			"runStopTime": 1523500219000,
+    			"updateTime": 1523155952908,
+    			"state": 1,
+    			"targetCityType": 1
+    		}]
+    	},
+    	"CODE": 200
+    }
+</textarea>
+    </div>
+</div>
+</body>
+<script th:src="@{/static/admin/js/editor.js}"></script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<header th:replace="admin/header::headerFragment('接口编辑','publish')"> </header>
+<body>
+	<div th:replace="admin/header::header-body"></div>
+	<input th:attr="type=hidden" id="cid"   th:value="${tContents.cid}" />
+	<input th:attr="type=hidden" id="seriesId" th:value="${tContents.seriesid}" />
+	<input type="hidden"   id="projectIdType"  th:value="${projectIdType}"/>
+	<div class="form-group col-md-1" style="padding: 30px 10px 0 3px; margin-left: 43px; margin-right: -63px;">
+		<button class="btn btn-primary waves-effect waves-light" onclick="backHtml()">返回</button>
+	</div>
+	<div class="form-group col-md-1" style="padding: 30px 10px 0 3px;">
+		<button class="btn btn-primary waves-effect waves-light" onclick="saveHtml()">保存</button>
+	</div>
+	<div class="form-group col-md-3" style="padding: 30px 10px 0 93px;">
+		 <input type="text" class="form-control" placeholder="请输入标题（必须）" name="title" th:value="${tContents.title}" required="required" aria-required="true" />
+	</div>
+	<div class="form-group col-md-3" style="padding: 30px 92px 12px 10px;">
+		<input type="text" class="form-control" placeholder="接口访问URL（必须）" name="url" th:value="${tContents.url}" />
+	</div>
+	<div id="layout" style="height: 900px;">
+		<div id="test-editormd">
+			<textarea id="text" class="editormd-html-textarea" name="text" th:utext="${tContents.content}"></textarea>
+		</div>
+	</div>
+</body>
+<script th:src="@{/static/admin/js/editor.js}"></script>
+</html>

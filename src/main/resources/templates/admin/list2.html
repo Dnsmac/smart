@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<header th:replace="admin/header::headerFragment('接口编辑','publish')"> </header>
+<body>
+	<div th:replace="admin/header::header-body"></div>
+	<div style="border: 1px solid #000; width: 1400px; height: 833px; margin-left: auto; margin-right: auto; margin-top: 25px;" class="container">
+
+		<div class="panel-group" id="accordion">
+
+			<div class="panel panel-default" th:each="m,iterStat  : ${vo}">
+				<div th:class="${iterStat.index % 2 ==0} ? 'panel panel-success' : 'panel panel-info'">
+					<div class="panel-heading" th:attr="data-target='#'+${m.name}" data-toggle="collapse">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" th:href="'#' +${m.name}" th:text="${m.name}"> </a>
+						</h4>
+					</div>
+					<div th:id="${m.name}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<table class="table table-bordered">
+								<caption th:onclick="'javascript:addEdit(\''+${m.seriesId}+'\',\''+${m.projectId}+'\')'">新增</caption>
+								<thead>
+									<tr>
+										<th>名称<input type="text" class="nameTable form-control"/></th>
+										<th>url  <input type="text" class="nameTable form-control"/></th>
+										<th>编辑</th>
+									</tr>
+								</thead>
+								
+								<tbody th:each="list,stat : ${m.tContents}" >
+									<tr th:class="${stat.index % 2 ==0} ? 'warning' : 'danger'">
+										<td>
+											<span th:text="${list.title}"></span>
+											<button type="button" class="btn btn-primary" th:onclick="'javascript:openWindow('+${list.cid}+')' ">查看</button>
+											<button type="button" class="btn btn-primary" th:onclick="'javascript:hrefWindow('+${list.cid}+')' ">编辑</button>
+										</td>
+										<td th:text="${list.url}" />
+										<td>
+											
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading" th:attr="data-target='#1'" data-toggle="collapse">
+					<h4 class="panel-title">
+						<a th:href="'javascript:openModal()'" th:text="添加接口类型"> </a>
+					</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">新增接口类型</h4>
+				</div>
+				<input type="hidden"  id="projectId" th:value="${projectIdType}"/>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="txt_departmentname">名称</label> <input type="text" class="form-control" id="seriesName" placeholder="名称" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+					</button>
+					<button type="button" id="btn_submit" class="btn btn-primary" th:onclick="'javascript:saveSeriesType()' ">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script th:src="@{/static/admin/js/list.js}"></script>
+</html>

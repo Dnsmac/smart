@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<header th:replace="admin/header::headerFragment('接口显示','publish')">
+    <meta charset="utf-8"/>
+</header>
+<body>
+<div class="form-group col-md-3" style="padding: 30px 10px 0 250px;">
+      <input type="text" class="form-control" placeholder="请输入标题（必须）" name="title"  th:value="${tContents.title}"/>
+  </div>
+  <div class="form-group col-md-3" style="padding: 30px 92px 12px 0px;">
+      <input type="text" class="form-control"  placeholder="接口访问URL（必须）" name="url"  th:value="${tContents.url}"/>
+  </div>
+  
+<div class="content editormd-preview-theme" id="content" style="    border: 1px solid #000;
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;">                          
+<textarea style="height: 450px" autocomplete="off" id="text" name="text"
+                                          class="markdown-textarea"
+                                          th:utext="${tContents.content}"></textarea></div>
+<script th:src="@{/static/jquery.min.js}"></script>
+<script th:src="@{/static/editor/lib/marked.min.js}"></script>
+<script th:src="@{/static/editor/lib/prettify.min.js}"></script>
+<script th:src="@{/static/editor/editormd.min.js}"></script>
+<script type="text/javascript">
+editormd.markdownToHTML("content");
+</script>
+</body>
+</html>

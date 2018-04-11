@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<header th:replace="admin/header::headerFragment('导航页','publish')">
+</header>
+<body>
+
+<div class="jumbotron">
+	<div class="container">
+		<h1>导航页！</h1>
+		<p>请选择你需要的模块。</p>
+		<p>
+			<a class="btn btn-primary btn-lg" role="button"  th:each="cat : ${cate}"    th:href="'/admin/project/'+${cat.categoryId}"   th:text="${cat.categoryName}"></a>
+			<a class="btn btn-primary btn-lg" role="button"  th:href="'javascript:openModalCategory()' "> 需要更多+</a>
+		</p>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="modalCategoryLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">新增类型</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="txt_departmentname">名称</label> <input type="text" class="form-control" id="categoryName" placeholder="名称" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+				</button>
+				<button type="button" id="btn_submit" class="btn btn-primary" th:onclick="'javascript:saveCategoryType()' ">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script th:src="@{/static/admin/js/editor.js}"></script>
+</html>

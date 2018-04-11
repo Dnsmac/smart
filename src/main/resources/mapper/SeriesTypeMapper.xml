@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.qidian.dao.SeriesTypeMapper" >
+
+    <resultMap id="BaseResultMap" type="org.qidian.modal.SeriesType" >
+        <id column="series_id" property="seriesId" jdbcType="INTEGER" />
+        <result column="project_id" property="projectId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+    <resultMap id="BaseResultMapDto" type="org.qidian.dto.SeriesTypeVo" >
+        <id column="series_id" property="seriesId" jdbcType="INTEGER" />
+        <result column="project_id" property="projectId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <association property="tContents" column="series_id"  select="org.qidian.dao.TContentsMapper.selectBySeriesId" />
+    </resultMap>
+    
+    
+
+    <sql id="Base_Column_List" >
+        series_id, project_id, name
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from series_type
+        where series_id = #{seriesId,jdbcType=INTEGER}
+    </select>
+    
+    <select id="selectByprojectId" resultMap="BaseResultMapDto" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from series_type
+        where project_id = #{projectId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from series_type
+        where series_id = #{seriesId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="org.qidian.modal.SeriesType" >
+        insert into series_type (series_id, project_id, name
+            )
+        values (#{seriesId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="org.qidian.modal.SeriesType" >
+        insert into series_type
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="seriesId != null" >
+                series_id,
+            </if>
+            <if test="projectId != null" >
+                project_id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="seriesId != null" >
+                #{seriesId,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null" >
+                #{projectId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="org.qidian.modal.SeriesType" >
+        update series_type
+        <set >
+            <if test="projectId != null" >
+                project_id = #{projectId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where series_id = #{seriesId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="org.qidian.modal.SeriesType" >
+        update series_type
+        set project_id = #{projectId,jdbcType=INTEGER},
+            name = #{name,jdbcType=VARCHAR}
+        where series_id = #{seriesId,jdbcType=INTEGER}
+    </update>
+</mapper>

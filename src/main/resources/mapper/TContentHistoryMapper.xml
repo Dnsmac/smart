@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.qidian.dao.TContentHistoryMapper" >
+
+    <resultMap id="BaseResultMap" type="org.qidian.modal.TContentHistory" >
+        <id column="history_id" property="historyId" jdbcType="INTEGER" />
+        <result column="cid" property="cid" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="created" property="created" jdbcType="DECIMAL" />
+        <result column="modified" property="modified" jdbcType="DECIMAL" />
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+        <result column="author_id" property="authorId" jdbcType="INTEGER" />
+        <result column="seriesId" property="seriesid" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="versions" property="versions" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="BaseResultMaps" type="org.qidian.modal.TContents" >
+        <id column="cid" property="cid" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="created" property="created" jdbcType="DECIMAL" />
+        <result column="modified" property="modified" jdbcType="DECIMAL" />
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+        <result column="author_id" property="authorId" jdbcType="INTEGER" />
+        <result column="seriesId" property="seriesid" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="versions" property="versions" jdbcType="VARCHAR" />
+    </resultMap>
+    
+
+
+    <sql id="Base_Column_List" >
+        history_id, cid, title, created, modified, content, author_id, seriesId, url, versions
+    </sql>
+      <sql id="Base_Column_Lists" >
+        cid, title, created, modified, content, author_id, seriesId, url, versions
+    </sql>
+    
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from t_content_history
+        where history_id = #{historyId,jdbcType=INTEGER}
+    </select>
+    
+    
+      <select id="selectByHistory" resultMap="BaseResultMaps" parameterType="org.qidian.modal.TContentHistory" >
+        select 
+        <include refid="Base_Column_Lists" />
+        from t_content_history
+        where cid = #{cid,jdbcType=INTEGER} and    versions = #{versions,jdbcType=VARCHAR}
+    </select>
+    
+    
+        <select id="selectByHistoryCount"  resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+        select  count(1)  from t_content_history  where cid = #{cid,jdbcType=INTEGER}
+    </select>
+    
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from t_content_history
+        where history_id = #{historyId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="org.qidian.modal.TContentHistory" >
+        insert into t_content_history (history_id, cid, title, 
+            created, modified, content, 
+            author_id, seriesId, url, 
+            versions)
+        values (#{historyId,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+            #{created,jdbcType=DECIMAL}, #{modified,jdbcType=DECIMAL}, #{content,jdbcType=LONGVARCHAR}, 
+            #{authorId,jdbcType=INTEGER}, #{seriesid,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+            #{versions,jdbcType=VARCHAR})
+    </insert>
+    
+    <insert id="insertContent" parameterType="org.qidian.modal.TContents" >
+        insert into t_content_history (cid, title, 
+            created, modified, content, 
+            author_id, seriesId, url, 
+            versions)
+        values ( #{cid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+            #{created,jdbcType=DECIMAL}, #{modified,jdbcType=DECIMAL}, #{content,jdbcType=LONGVARCHAR}, 
+            #{authorId,jdbcType=INTEGER}, #{seriesid,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+            #{versions,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="org.qidian.modal.TContentHistory" >
+        insert into t_content_history
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="historyId != null" >
+                history_id,
+            </if>
+            <if test="cid != null" >
+                cid,
+            </if>
+            <if test="title != null" >
+                title,
+            </if>
+            <if test="created != null" >
+                created,
+            </if>
+            <if test="modified != null" >
+                modified,
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+            <if test="authorId != null" >
+                author_id,
+            </if>
+            <if test="seriesid != null" >
+                seriesId,
+            </if>
+            <if test="url != null" >
+                url,
+            </if>
+            <if test="versions != null" >
+                versions,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="historyId != null" >
+                #{historyId,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null" >
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="title != null" >
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null" >
+                #{created,jdbcType=DECIMAL},
+            </if>
+            <if test="modified != null" >
+                #{modified,jdbcType=DECIMAL},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="authorId != null" >
+                #{authorId,jdbcType=INTEGER},
+            </if>
+            <if test="seriesid != null" >
+                #{seriesid,jdbcType=INTEGER},
+            </if>
+            <if test="url != null" >
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="versions != null" >
+                #{versions,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="org.qidian.modal.TContentHistory" >
+        update t_content_history
+        <set >
+            <if test="cid != null" >
+                cid = #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="title != null" >
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null" >
+                created = #{created,jdbcType=DECIMAL},
+            </if>
+            <if test="modified != null" >
+                modified = #{modified,jdbcType=DECIMAL},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="authorId != null" >
+                author_id = #{authorId,jdbcType=INTEGER},
+            </if>
+            <if test="seriesid != null" >
+                seriesId = #{seriesid,jdbcType=INTEGER},
+            </if>
+            <if test="url != null" >
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="versions != null" >
+                versions = #{versions,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where history_id = #{historyId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="org.qidian.modal.TContentHistory" >
+        update t_content_history
+        set cid = #{cid,jdbcType=INTEGER},
+            title = #{title,jdbcType=VARCHAR},
+            created = #{created,jdbcType=DECIMAL},
+            modified = #{modified,jdbcType=DECIMAL},
+            content = #{content,jdbcType=LONGVARCHAR},
+            author_id = #{authorId,jdbcType=INTEGER},
+            seriesId = #{seriesid,jdbcType=INTEGER},
+            url = #{url,jdbcType=VARCHAR},
+            versions = #{versions,jdbcType=VARCHAR}
+        where history_id = #{historyId,jdbcType=INTEGER}
+    </update>
+</mapper>
